@@ -5,8 +5,33 @@ var path = require('path');
 var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
 var os = require('os');
+var fsExtra = require('fs.extra');
+var _DEBUG = false;
 
 describe('JHipster generator ', function () {
+/*
+	var targetDir = path.join(__dirname, 'temp', 'test-creation');
+
+	beforeEach(function (done) {
+    helpers.testDirectory(targetDir, function (err) {
+      if (err) {
+        return done(err);
+      }
+
+      this.app = helpers.createGenerator('jhipster:app', [
+        '../../../app'
+      ]);
+      done();
+    }.bind(this));
+  });
+
+  afterEach(function (done) {
+    if (_DEBUG) {
+      done();
+    } else {
+      fsExtra.rmrf(targetDir, done)
+    }
+  });*/
     before(function (done) {
         helpers.run(path.join(__dirname, '../app'))
             .withOptions({ skipInstall: true })
