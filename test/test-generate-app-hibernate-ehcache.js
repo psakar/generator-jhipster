@@ -6,7 +6,7 @@ var fs = require('fs');
 var fsExtra = require('fs.extra');
 var helpers  = require('yeoman-generator').test;
 var TestUtils = require('./test-utils');
-var _DEBUG = false;
+var _DEBUG = true;
 
 describe('jhipster generate app hibernate ehcache', function () {
 
@@ -17,7 +17,7 @@ describe('jhipster generate app hibernate ehcache', function () {
     if (_DEBUG) {
       done();
     } else {
-      fsExtra.rmrf(targetDir, done)
+      fsExtra.rmrf(targetDir, done);
     }
   });
   

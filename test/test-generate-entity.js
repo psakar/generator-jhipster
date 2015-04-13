@@ -8,7 +8,7 @@ var fsExtra = require('fs.extra');
 var strings = require('underscore.string');
 var assert    = require('assert');
 var TestUtils = require('./test-utils');
-var _DEBUG = false;
+var _DEBUG = true;
 
 describe('jhipster generate entity', function () {
   var entityName = 'myEntity';
@@ -26,7 +26,7 @@ describe('jhipster generate entity', function () {
     if (_DEBUG) {
       done();
     } else {
-      fsExtra.rmrf(targetDir, done)
+      fsExtra.rmrf(targetDir, done);
     }
   });
 
