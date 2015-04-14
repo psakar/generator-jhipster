@@ -111,6 +111,10 @@ Generator.prototype.dateFormatForLiquibase = function () {
     return year + "" + month + "" + day + "" + hour + "" + minute + "" + second;
 };
 
+Generator.prototype.generatedDatetime = function () {
+    return (new Date).toISOString().replace('T', ' ');
+};
+
 Generator.prototype.installI18nFilesByLanguage = function (_this, webappDir, resourceDir, lang) {
     this.copyI18nFilesByName(_this, webappDir, 'activate.json', lang);
     this.copyI18nFilesByName(_this, webappDir, 'audits.json', lang);

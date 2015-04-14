@@ -1099,6 +1099,8 @@ JhipsterGenerator.prototype.app = function app() {
     removefile(testJsDir + 'spec/app/account/settings/settingsControllerSpec.js');
     removefile(testJsDir + 'spec/components/auth/authServicesSpec.js');
 
+    this.config.set('version', this.pkg.version);
+    this.config.set('generatedDatetime', this.generatedDatetime())
     this.config.set('baseName', this.baseName);
     this.config.set('packageName', this.packageName);
     this.config.set('packageFolder', packageFolder);

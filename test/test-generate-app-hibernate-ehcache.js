@@ -58,6 +58,7 @@ describe('jhipster generate app hibernate ehcache', function () {
       this.app.options['skip-install'] = true;
       this.app.run({}, function () {
       	testUtils.fixDateInGeneratedGruntfileJs(targetDir);
+		testUtils.fixGeneratedDatetime(targetDir);
         fixRememberMeKeyInGeneratedFiles();
         var expectedFilesDir = testUtils.createArchetypesDir('app-hibernate-ehcache');
         testUtils.assertGeneratedFiles(expectedFilesDir, targetDir);

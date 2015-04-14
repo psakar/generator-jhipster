@@ -3,10 +3,13 @@ var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
 var dircompare = require('dir-compare');
+var packagejs = require(__dirname + '/../package.json');
+
 var _DEBUG = false;
 
 var TestUtils = module.exports = function TestUtils() {
   this.rememberKeyLineStart = '    "rememberMeKey": ';
+  this.version = packagejs.version;
 };
 
 TestUtils.prototype.assertGeneratedFiles = function (expectedFilesDir, targetDir) {
@@ -47,21 +50,35 @@ TestUtils.prototype.replaceInGeneratedFile = function (file, toReplace, replacem
   fs.writeFileSync(file, content);
 }
 
-TestUtils.prototype.findGeneratedRememberMeKey = function (file) {
-  if (_DEBUG) console.log('Fix findGeneratedRememberMeKey in ' + file);
+TestUtils.prototype.findGeneratedRememberMeKey = function (file, lineStart) {
+  if (_DEBUG) {
+    console.log('Fix findGeneratedRememberMeKey in ' + file);
+  }
+  var line = this.findLineStartingWith(file, this.rememberKeyLineStart, true);
+  var rememberMeKey = line.substring(this.rememberKeyLineStart.length);
+  rememberMeKey = rememberMeKey.substring(1, rememberMeKey.length - 1);
+  if (_DEBUG) {
+    console.log('RemeberMeKey ' + rememberMeKey);  
+  }
+  return rememberMeKey;
+}
+
+TestUtils.prototype.findLineStartingWith = function (file, lineStart, mandatory) {
+  if (_DEBUG) console.log('Find in ' + file + ' line starting with ' + lineStart);
   var array = fs.readFileSync(file).toString().split("\n");
-  var len = this.rememberKeyLineStart.length;
+  var len = lineStart.length;
   for (var i in array) {
     var line = array[i];
-    if (_DEBUG) console.log('line ' + line.substring(0, len));
-    if (this.rememberKeyLineStart == line.substring(0, len)) {
-    var rememberMeKey = line.substring(len);
-      rememberMeKey = rememberMeKey.substring(1, rememberMeKey.length - 1);
-      if (_DEBUG) console.log('RemeberMeKey ' + rememberMeKey);
-      return rememberMeKey;
+    if (lineStart == line.substring(0, len)) {
+      if (_DEBUG) 
+		  console.log('Found line :' + line);
+      return line;
     }
   }
-  throw 'Remember key line starting with ' + rememberKeyLineStart + ' was not found in ' + file;
+  if (mandatory) {
+    throw Error('Line starting with ' + lineStart + ' was not found in ' + file);
+  }
+  return null;
 }
 
 TestUtils.prototype.fixDateInGeneratedGruntfileJs = function (targetDir) {
@@ -74,4 +91,27 @@ TestUtils.prototype.createTargetPath = function (filename) {
 
 TestUtils.prototype.createArchetypesDir = function (name) {
   return path.join(__dirname, 'archetypes', name);
+}
+
+TestUtils.prototype.getGeneratorVersion = function () {
+  return this.version;
+}
+
+TestUtils.prototype.getGeneratedDateTime = function () {
+  return "2015-03-31 14:59:00.123Z";
+}
+
+TestUtils.prototype.fixGeneratedDatetime = function (targetDir) {
+  var file = path.resolve(targetDir, ".yo-rc.json");
+  if (_DEBUG) {
+    console.log('Fix generatedDatetime in ' + file);
+  }
+  var testGeneratedDateTime = this.getGeneratedDateTime();
+  var lineStart = '    "generatedDatetime": "';
+  var line = this.findLineStartingWith(path.resolve(targetDir, '.yo-rc.json'), lineStart, true);
+  var generatedDatetime = line.substring(lineStart.length, lineStart.length + testGeneratedDateTime.length);
+  if (_DEBUG) {
+    console.log('generatedDatetime ' + generatedDatetime);  
+  }
+  this.replaceInGeneratedFile(file, lineStart + generatedDatetime + '"', lineStart + testGeneratedDateTime + '"'); 
 }
