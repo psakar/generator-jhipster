@@ -44,6 +44,8 @@ describe('jhipster generate entity', function () {
 
   it('creates expected files', function (done) {
     var entityConfigContent = '{'
++ '\n' + '   "version": "' + testUtils.getGeneratorVersion() + '",'
++ '\n' + '   "generatedDatetime": "' + testUtils.getGeneratedDateTime() + '",'
 + '\n' + '   "relationships": [],'
 + '\n' + '    "fields": ['
 + '\n' + '        {'
@@ -78,6 +80,8 @@ describe('jhipster generate entity', function () {
 
     var appConfigContent = '{'
 + '\n' + '  "generator-jhipster": {'
++ '\n' + '    "version": "' + testUtils.getGeneratorVersion() + '",'
++ '\n' + '    "generatedDatetime": "' + testUtils.getGeneratedDateTime() + '",'
 + '\n' + '    "baseName": "jhipster",'
 + '\n' + '    "packageName": "com.mycompany.myapp",'
 + '\n' + '    "packageFolder": "com/mycompany/myapp",'

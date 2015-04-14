@@ -8,7 +8,8 @@ var util = require('util'),
         _s = require('underscore.string'),
         shelljs = require('shelljs'),
         html = require("html-wiring"),
-        scriptBase = require('../script-base');
+        scriptBase = require('../script-base'),
+        packagejs = require(__dirname + '/../package.json');
 
 var reservedWords_Java = ["ABSTRACT", "CONTINUE", "FOR", "NEW", "SWITCH", "ASSERT", "DEFAULT", "GOTO", "PACKAGE", "SYNCHRONIZED", "BOOLEAN", "DO", "IF", "PRIVATE", "THIS", "BREAK", "DOUBLE", "IMPLEMENTS", "PROTECTED", "THROW", "BYTE", "ELSE", "IMPORT", "PUBLIC", "THROWS", "CASE", "ENUM", "INSTANCEOF", "RETURN", "TRANSIENT", "CATCH", "EXTENDS", "INT", "SHORT", "TRY", "CHAR", "FINAL", "INTERFACE", "STATIC", "VOID", "CLASS", "FINALLY", "LONG", "STRICTFP", "VOLATILE", "CONST", "FLOAT", "NATIVE", "SUPER", "WHILE"];
 
@@ -102,6 +103,7 @@ var EntityGenerator = module.exports = function EntityGenerator(args, options, c
     this.pagination = 'no';
     this.validation = false;
     this.dto = 'no';
+    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 var fieldNamesUnderscored = ['id'];
@@ -849,6 +851,8 @@ EntityGenerator.prototype.files = function files() {
             this.changelogDate = this.dateFormatForLiquibase();
         }
         this.data = {};
+        this.data.version = this.pkg.version;
+        this.data.datetime = this.generatedDatetime();
         this.data.relationships = this.relationships;
         this.data.fields = this.fields;
         this.data.changelogDate = this.changelogDate;
