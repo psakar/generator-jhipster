@@ -53,7 +53,7 @@ import <%=packageName%>.domain.enumeration.<%= element %>;<% }); %>
  * A <%= entityClass %>.
  */<% if (databaseType == 'sql') { %>
 @Entity
-@Table(name = "<%= name.toUpperCase() %>")<% if (hibernateCache != 'no') { %>
+@Table(name = "<%= tableName %>")<% if (hibernateCache != 'no') { %>
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)<% } %><% } %><% if (databaseType == 'mongodb') { %>
 @Document(collection = "<%= name.toUpperCase() %>")<% } %><% if (databaseType == 'cassandra') { %>
 @Table(name = "<%= entityInstance %>")<% } %><% if (searchEngine == 'elasticsearch') { %>

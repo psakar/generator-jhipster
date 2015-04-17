@@ -113,6 +113,30 @@ var prodDatabaseType;
 util.inherits(EntityGenerator, yeoman.generators.Base);
 util.inherits(EntityGenerator, scriptBase);
 
+EntityGenerator.prototype.askForTableName = function askForTableName() {
+    if (this.useConfigurationFile == true) {// don't prompt if data are imported from a file
+        return;
+    }
+    var tableName = "T_" + this.name.toUpperCase();
+    console.log('test ' + databaseType + ' ' + tableName);
+    var cb = this.async();
+    var prompts = [
+        {
+            when: function (response) {
+                return (databaseType == 'sql');
+            },
+            type: 'input',
+            name: 'tableName',
+            message: 'What will be the name of database table?',
+            default: tableName
+        }
+        ];
+    this.prompt(prompts, function (props) {
+        this.tableName = props.tableName;
+        cb();
+    }.bind(this));
+}
+
 EntityGenerator.prototype.askForFields = function askForFields() {
     if (this.useConfigurationFile == true) {// don't prompt if data are imported from a file
         return;
@@ -850,9 +874,15 @@ EntityGenerator.prototype.files = function files() {
         if (this.databaseType == "sql" || this.databaseType == "cassandra") {
             this.changelogDate = this.dateFormatForLiquibase();
         }
+    this.entityClass = _s.capitalize(this.name);
+    this.entityInstance = this.name.charAt(0).toLowerCase() + this.name.slice(1);
+
         this.data = {};
         this.data.version = this.pkg.version;
         this.data.datetime = this.generatedDatetime();
+        if (this.databaseType == "sql") {
+          this.data.tableName = this.tableName;
+        }
         this.data.relationships = this.relationships;
         this.data.fields = this.fields;
         this.data.changelogDate = this.changelogDate;
@@ -862,6 +892,9 @@ EntityGenerator.prototype.files = function files() {
         }
         this.write(this.filename, JSON.stringify(this.data, null, 4));
     } else  {
+        if (this.databaseType == "sql") {
+          this.tableName = this.fileData.tableName;
+        }
         this.relationships = this.fileData.relationships;
         this.fields = this.fileData.fields;
         this.changelogDate = this.fileData.changelogDate;
