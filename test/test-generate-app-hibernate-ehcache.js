@@ -6,21 +6,22 @@ var fs = require('fs');
 var fsExtra = require('fs.extra');
 var helpers  = require('yeoman-generator').test;
 var TestUtils = require('./test-utils');
-var _DEBUG = true;
+var _DEBUG = false;
 
 describe('jhipster generate app hibernate ehcache', function () {
 
   var testUtils = new TestUtils();
   var targetDir = testUtils.createTargetPath(__filename);
+  var success = false;
 
   afterEach(function (done) {
-    if (_DEBUG) {
+    if (_DEBUG || !success) {
       done();
     } else {
       fsExtra.rmrf(targetDir, done);
     }
   });
-  
+
   var resourceDir = 'src/main/resources/';
   var testResourceDir = 'src/test/resources/';
   var webappDir = 'src/main/webapp/';
@@ -40,7 +41,7 @@ describe('jhipster generate app hibernate ehcache', function () {
       this.app = helpers.createGenerator('jhipster:app', [
         '../../../app'
       ]);
-      
+
       helpers.mockPrompt(this.app, {
         'baseName': 'jhipster',
         'packageName': 'com.mycompany.myapp',
@@ -62,6 +63,7 @@ describe('jhipster generate app hibernate ehcache', function () {
         fixRememberMeKeyInGeneratedFiles();
         var expectedFilesDir = testUtils.createArchetypesDir('app-hibernate-ehcache');
         testUtils.assertGeneratedFiles(expectedFilesDir, targetDir);
+        success = true;
         done();
       });
     }.bind(this));
@@ -71,7 +73,7 @@ describe('jhipster generate app hibernate ehcache', function () {
   var rememberKeyLineStart = testUtils.rememberKeyLineStart;
   var rememberKeyPregenerated = 'edd44237637a11657087ce937cca7e3925161366';
   var rememberKeyLineStartApplicationYml = 'jhipster.security.rememberme.key: ';
-  
+
   function fixRememberMeKeyInGeneratedFiles() {
     var file = path.resolve(targetDir, ".yo-rc.json");
     var rememberMeKey = testUtils.findGeneratedRememberMeKey(file);

@@ -8,22 +8,24 @@ var fsExtra = require('fs.extra');
 var strings = require('underscore.string');
 var assert    = require('assert');
 var TestUtils = require('./test-utils');
-var _DEBUG = true;
+var _DEBUG = false;
 
 describe('jhipster generate entity', function () {
   var entityName = 'myEntity';
   var testUtils = new TestUtils();
   var targetDir = testUtils.createTargetPath(__filename);
+  var success = false;
+
   var entityConfigFileFolder = path.join(targetDir, '.jhipster');
   var entityConfigFileName =  strings.capitalize(entityName) + '.json';
   var entityConfigFile = path.join(entityConfigFileFolder, entityConfigFileName);
-  
+
   var appConfigFileFolder = targetDir;
   var appConfigFileName = '.yo-rc.json';
   var appConfigFile = path.join(appConfigFileFolder, appConfigFileName);
 
   afterEach(function (done) {
-    if (_DEBUG) {
+    if (_DEBUG || !success) {
       done();
     } else {
       fsExtra.rmrf(targetDir, done);
@@ -108,7 +110,7 @@ describe('jhipster generate entity', function () {
 
       writeEntityConfig(entityConfigContent);
       writeAppConfig(appConfigContent)
-      
+
       console.log('Create and run generator');
 
       this.app = helpers.createGenerator('jhipster:entity', [
@@ -118,6 +120,7 @@ describe('jhipster generate entity', function () {
       this.app.run({}, function () {
         var expectedFilesDir = testUtils.createArchetypesDir('entity');
         testUtils.assertGeneratedFiles(expectedFilesDir, targetDir);
+        success = true;
         done();
       });
     }.bind(this));
