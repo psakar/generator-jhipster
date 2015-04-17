@@ -58,7 +58,7 @@ TestUtils.prototype.findGeneratedRememberMeKey = function (file, lineStart) {
   var rememberMeKey = line.substring(this.rememberKeyLineStart.length);
   rememberMeKey = rememberMeKey.substring(1, rememberMeKey.length - 1);
   if (_DEBUG) {
-    console.log('RemeberMeKey ' + rememberMeKey);  
+    console.log('RemeberMeKey ' + rememberMeKey);
   }
   return rememberMeKey;
 }
@@ -70,7 +70,7 @@ TestUtils.prototype.findLineStartingWith = function (file, lineStart, mandatory)
   for (var i in array) {
     var line = array[i];
     if (lineStart == line.substring(0, len)) {
-      if (_DEBUG) 
+      if (_DEBUG)
 		  console.log('Found line :' + line);
       return line;
     }
@@ -82,7 +82,7 @@ TestUtils.prototype.findLineStartingWith = function (file, lineStart, mandatory)
 }
 
 TestUtils.prototype.fixDateInGeneratedGruntfileJs = function (targetDir) {
-  this.replaceInGeneratedFile(path.resolve(targetDir, "Gruntfile.js"), '// Generated on ' + (new Date).toISOString().split('T')[0], '// Generated on 2015-01-01'); 
+  this.replaceInGeneratedFile(path.resolve(targetDir, "Gruntfile.js"), '// Generated on ' + (new Date).toISOString().split('T')[0], '// Generated on 2015-01-01');
 }
 
 TestUtils.prototype.createTargetPath = function (filename) {
@@ -111,7 +111,26 @@ TestUtils.prototype.fixGeneratedDatetime = function (targetDir) {
   var line = this.findLineStartingWith(path.resolve(targetDir, '.yo-rc.json'), lineStart, true);
   var generatedDatetime = line.substring(lineStart.length, lineStart.length + testGeneratedDateTime.length);
   if (_DEBUG) {
-    console.log('generatedDatetime ' + generatedDatetime);  
+    console.log('generatedDatetime ' + generatedDatetime);
   }
-  this.replaceInGeneratedFile(file, lineStart + generatedDatetime + '"', lineStart + testGeneratedDateTime + '"'); 
+  this.replaceInGeneratedFile(file, lineStart + generatedDatetime + '"', lineStart + testGeneratedDateTime + '"');
 }
+
+TestUtils.prototype.writeToFile = function(file, content) {
+  var dir = path.dirname(file);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  fs.writeFileSync(file, content);
+}
+
+TestUtils.prototype.writeEntityConfig = function(file, content) {
+  this.writeToFile(file, content);
+  console.log('Entity config file was saved to ' + file);
+}
+
+TestUtils.prototype.writeAppConfig = function(file, content) {
+  this.writeToFile(file, content);
+  console.log('App config file was saved to ' + file);
+}
+

@@ -16,9 +16,8 @@ describe('jhipster generate entity', function () {
   var targetDir = testUtils.createTargetPath(__filename);
   var success = false;
 
-  var entityConfigFileFolder = path.join(targetDir, '.jhipster');
   var entityConfigFileName =  strings.capitalize(entityName) + '.json';
-  var entityConfigFile = path.join(entityConfigFileFolder, entityConfigFileName);
+  var entityConfigFile = path.join(targetDir, '.jhipster', entityConfigFileName);
 
   var appConfigFileFolder = targetDir;
   var appConfigFileName = '.yo-rc.json';
@@ -108,8 +107,8 @@ describe('jhipster generate entity', function () {
         return done(err);
       }
 
-      writeEntityConfig(entityConfigContent);
-      writeAppConfig(appConfigContent)
+      testUtils.writeEntityConfig(entityConfigFile, entityConfigContent);
+      testUtils.writeAppConfig(appConfigFile, appConfigContent);
 
       console.log('Create and run generator');
 
@@ -125,17 +124,6 @@ describe('jhipster generate entity', function () {
       });
     }.bind(this));
   });
-
-  function writeEntityConfig(entityConfigContent) {
-    fs.mkdirSync(entityConfigFileFolder);
-    fs.writeFileSync(entityConfigFile, entityConfigContent);
-    console.log('Entity config file was saved to ' + entityConfigFile);
-  }
-
-  function writeAppConfig(appConfigContent) {
-    fs.writeFileSync(appConfigFile, appConfigContent);
-    console.log('App config file was saved to ' + appConfigFile);
-  }
 
 });
 
