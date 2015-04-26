@@ -1346,3 +1346,22 @@ EntityGenerator.prototype.copyEnumI18n = function(language, enumInfo) {
         // do nothing
     }
 };
+
+EntityGenerator.prototype.escapeQuotes = function(name) {
+    if (name == undefined)
+        return name;
+    var quote = '"';
+    var pos = name.indexOf(quote);
+    // console.log('Pos initial ' + pos);
+    while (pos >= 0) {
+        //console.log('Name start ' + name.substr(0, pos));
+        //console.log('Name end ' + name.substr(pos));
+        //console.log('Name end replace ' + name.substr(pos).replace(quote, '\\"'));
+        name = name.substr(0, pos) + name.substr(pos).replace(quote, '\\"');
+        //console.log('Name ' + name);
+        pos = name.indexOf(quote, pos + 2);
+        //console.log('Pos ' + pos);
+    }
+    //console.log('Result ' + name);
+    return name;
+}
