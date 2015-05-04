@@ -1302,6 +1302,7 @@ EntityGenerator.prototype.files = function files() {
     // Copy for each
     if(this.enableTranslation) {
         this.copyI18n('ca');
+        this.copyI18n('cs');
         this.copyI18n('zh-cn');
         this.copyI18n('zh-tw');
         this.copyI18n('da');
@@ -1336,7 +1337,7 @@ EntityGenerator.prototype.copyI18n = function(language) {
         var templateFile = 'src/main/webapp/i18n/_entity_' + language + '.json';
         var destFile = 'src/main/webapp/i18n/' + language + '/' + this.entityInstance + '.json';
         this.template(templateFile, destFile, this, {});
-        this.addNewEntityToMenu(language, this.entityInstance, this.entityClass);
+        this.addNewEntityToMenu(language, this.entityInstance, eval('this.data.translation_plural.' + language));
     } catch(e) {
         console.log('Error in template ' + templateFile + ' creaing ' + destFile + ' - ' + e.message);
     }
@@ -1389,4 +1390,14 @@ EntityGenerator.prototype.removeSurroundingQuotes = function(name) {
     }
     //console.log('Result ' + name);
     return name;
+}
+
+EntityGenerator.prototype.uncapitalize = function(value) {
+    if (value == undefined || value.length == 0)
+        return value;
+    return value.substr(0, 1).toLowerCase() + (value.length > 1 ? value.substr(1) : "");
+}
+
+EntityGenerator.prototype.defaultString = function(value, defaultValue) {
+    return (value == undefined ? defaultValue : value);
 }
