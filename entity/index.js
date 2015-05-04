@@ -1324,14 +1324,21 @@ EntityGenerator.prototype.files = function files() {
 
 EntityGenerator.prototype.copyI18n = function(language) {
     try {
-        var stats = fs.lstatSync('src/main/webapp/i18n/' + language);
-        if (stats.isDirectory()) {
-            this.template('src/main/webapp/i18n/_entity_' + language + '.json', 'src/main/webapp/i18n/' + language + '/' + this.entityInstance + '.json', this, {});
-            this.addNewEntityToMenu(language, this.entityInstance, this.entityClass);
-        }
+        var isDirectory = fs.lstatSync('src/main/webapp/i18n/' + language).isDirectory();
     } catch(e) {
         // An exception is thrown if the folder doesn't exist
         // do nothing
+    }
+    if (!isDirectory) {
+        return;
+    }
+    try {
+        var templateFile = 'src/main/webapp/i18n/_entity_' + language + '.json';
+        var destFile = 'src/main/webapp/i18n/' + language + '/' + this.entityInstance + '.json';
+        this.template(templateFile, destFile, this, {});
+        this.addNewEntityToMenu(language, this.entityInstance, this.entityClass);
+    } catch(e) {
+        console.log('Error in template ' + templateFile + ' creaing ' + destFile + ' - ' + e.message);
     }
 };
 
