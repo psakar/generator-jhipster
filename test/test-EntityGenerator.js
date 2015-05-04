@@ -21,5 +21,14 @@ describe('jhipster EntityGenerator', function () {
       done();
   });
 
+  it('removes surrounding quotes in sql names', function (done) {
+    var entityGenerator = helpers.createGenerator('jhipster:entity', [
+      './entity'
+    ], 'entityName');
+    assert.equal('name', entityGenerator.removeSurroundingQuotes('name'));
+    assert.equal('name', entityGenerator.removeSurroundingQuotes('"name"'));
+    done();
+  });
+
 });
 

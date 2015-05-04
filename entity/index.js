@@ -1365,3 +1365,21 @@ EntityGenerator.prototype.escapeQuotes = function(name) {
     //console.log('Result ' + name);
     return name;
 }
+
+EntityGenerator.prototype.removeSurroundingQuotes = function(name) {
+    if (name == undefined || name.length == 0)
+        return name;
+    var quote = '"';
+    //console.log('Name ' + name + ' start ' + name.charAt(0));
+    if (name.charAt(0) == quote) {
+        name = name.substr(1);
+        //console.log('Removed leading ' + name);
+    }
+    var len = name.length;
+    if (len > 0 && name.substr(len - 1) == quote) {
+        name = name.substr(0, len - 1);
+        //console.log('Removed trailing ' + name);
+    }
+    //console.log('Result ' + name);
+    return name;
+}

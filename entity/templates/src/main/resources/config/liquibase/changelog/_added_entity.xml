@@ -18,8 +18,8 @@
         Added the entity <%= entityClass %>.
     -->
     <changeSet id="<%= changelogDate %>" author="jhipster"><% if(prodDatabaseType === 'oracle') {%>
-        <createSequence sequenceName="SEQ_<%= name.toUpperCase() %>" startValue="1000" incrementBy="1"/><% } %>
-        <createTable tableName="<%= name.toUpperCase() %>">
+        <createSequence sequenceName="SEQ_<%= name.toUpperCase() %>" startValue="1" incrementBy="1"/><% } %>
+        <createTable tableName="<%= removeSurroundingQuotes(tableName) %>">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}" <% if(prodDatabaseType === 'oracle') {%>defaultValueComputed="SEQ_<%= name.toUpperCase() %>.NEXTVAL"<% } %>>
                 <constraints primaryKey="true" nullable="false"/>
             </column><% for (fieldId in fields) {
