@@ -3,7 +3,7 @@
         "<%= entityInstance %>" : {
             "home": {
                 "title": "<%= data.translation_plural.en %>",
-                "createLabel": "Create",
+/*                "createLabel": "Create",*/
                 "createOrEditLabel": "Create or edit  <%= defaultString(uncapitalize(eval('data.translation.en')), entityClass) %>"
             },
             "created": "A new <%= entityClass %> is created with identifier {{ param }}",

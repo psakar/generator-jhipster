@@ -3,7 +3,7 @@
         "<%= entityInstance %>" : {
             "home": {
                 "title": "<%= data.translation_plural.cs %>",
-                "createLabel": "Přidat",
+/*                "createLabel": "Přidat",*/
                 "createOrEditLabel": "Přidat/upravit <%= defaultString(uncapitalize(eval('data.translation.cs'), entityClass) %>"
             },
             "delete": {
