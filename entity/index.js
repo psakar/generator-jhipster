@@ -55,7 +55,7 @@ var EntityGenerator = module.exports = function EntityGenerator(args, options, c
     if (shelljs.test('-f', this.filename)) {
         console.log(chalk.green('Found the ' + this.filename + ' configuration file, automatically generating the entity'));
         try {
-            this.fileData = JSON.parse(html.readFileAsString(this.filename))
+            this.data = JSON.parse(html.readFileAsString(this.filename))
         } catch (err) {
             console.log(chalk.red('The configuration file could not be read!'));
             return;
@@ -893,13 +893,13 @@ EntityGenerator.prototype.files = function files() {
         this.write(this.filename, JSON.stringify(this.data, null, 4));
     } else  {
         if (this.databaseType == "sql") {
-          this.tableName = this.fileData.tableName;
+          this.tableName = this.data.tableName;
         }
-        this.relationships = this.fileData.relationships;
-        this.fields = this.fileData.fields;
-        this.changelogDate = this.fileData.changelogDate;
-        this.dto = this.fileData.dto;
-        this.pagination = this.fileData.pagination;
+        this.relationships = this.data.relationships;
+        this.fields = this.data.fields;
+        this.changelogDate = this.data.changelogDate;
+        this.dto = this.data.dto;
+        this.pagination = this.data.pagination;
 
         // Validate entity json feild content
         for (var idx in this.fields) {
