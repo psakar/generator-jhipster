@@ -4,10 +4,10 @@
             "home": {
                 "title": "<%= data.translation_plural.cs %>",
 /*                "createLabel": "Přidat",*/
-                "createOrEditLabel": "Přidat/upravit <%= defaultString(uncapitalize(eval('data.translation.cs'), entityClass) %>"
+                "createOrEditLabel": "Přidat/upravit <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %>"
             },
             "delete": {
-                "question": "Opravdu chcete smazat <%= data.translation.cs %> {{ id }}?"
+                "question": "Opravdu chcete smazat <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> {{ id }}?"
             },
             "detail": {
                 "title": "<%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %>"

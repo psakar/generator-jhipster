@@ -10,7 +10,7 @@
             "updated": "A <%= entityClass %> is updated with identifier {{ param }}",
             "deleted": "A <%= entityClass %> is deleted with identifier {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete <%= data.translation.en.lowercase() %> {{ id }}?"
+                "question": "Are you sure you want to delete <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> {{ id }}?"
             },
             "detail": {
                 "title": "<%= defaultString(uncapitalize(eval('data.translation.en')), entityClass) %>"

@@ -118,7 +118,6 @@ EntityGenerator.prototype.askForTableName = function askForTableName() {
         return;
     }
     var tableName = "T_" + this.name.toUpperCase();
-    console.log('test ' + databaseType + ' ' + tableName);
     var cb = this.async();
     var prompts = [
         {
