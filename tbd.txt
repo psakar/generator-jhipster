@@ -1,0 +1,8 @@
+entity
+ - without generated id with natural key
+ - natural composite key
+ - general order including fields AND relations (currently fields and relationships are separated)
+ - date field - calendar
+
+app
+ - user management
