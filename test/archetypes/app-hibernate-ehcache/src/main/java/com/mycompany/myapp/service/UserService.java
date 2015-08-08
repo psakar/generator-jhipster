@@ -51,8 +51,38 @@ public class UserService {
         return user;
     }
 
+    public User completePasswordReset(String newPassword, String key) {
+        log.debug("Reset user password for reset key {}", key);
+        User user = userRepository.findOneByResetKey(key);
+        DateTime oneDayAgo = DateTime.now().minusHours(24);
+        if (user != null && user.getActivated()) {
+            if (user.getResetDate().isAfter(oneDayAgo.toInstant().getMillis())) {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                user.setResetKey(null);
+                user.setResetDate(null);
+                userRepository.save(user);
+                return user;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public User requestPasswordReset(String mail) {
+        User user = userRepository.findOneByEmail(mail);
+        if (user != null && user.getActivated()) {
+            user.setResetKey(RandomUtil.generateResetKey());
+            user.setResetDate(DateTime.now());
+            userRepository.save(user);
+            return user;
+        }
+        return null;
+    }
+
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,
                                       String langKey) {
+
         User newUser = new User();
         Authority authority = authorityRepository.findOne("ROLE_USER");
         Set<Authority> authorities = new HashSet<>();
@@ -75,11 +105,12 @@ public class UserService {
         return newUser;
     }
 
-    public void updateUserInformation(String firstName, String lastName, String email) {
+    public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
         User currentUser = userRepository.findOneByLogin(SecurityUtils.getCurrentLogin());
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
         currentUser.setEmail(email);
+        currentUser.setLangKey(langKey);
         userRepository.save(currentUser);
         log.debug("Changed Information for User: {}", currentUser);
     }

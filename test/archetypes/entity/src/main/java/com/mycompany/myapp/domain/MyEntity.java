@@ -8,6 +8,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+
 /**
  * A MyEntity.
  */
@@ -17,11 +18,13 @@ import java.util.Objects;
 public class MyEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50)    
+
+    
     @Column(name = "field1", length = 50, nullable = false)
     private String field1;
 

@@ -4,6 +4,7 @@ var path = require('path');
 var assert = require('assert');
 var dircompare = require('dir-compare');
 var packagejs = require(__dirname + '/../package.json');
+var shell = require('shelljs');
 
 var _DEBUG = false;
 
@@ -40,7 +41,7 @@ TestUtils.prototype.assertGeneratedFiles = function (expectedFilesDir, targetDir
       }
     });
   }
-  assert.equal(0, res.distinct, 'Generated files differ from template')
+  assert.equal(res.distinct, 0, 'Generated files differ from template');
 };
 
 TestUtils.prototype.replaceInGeneratedFile = function (file, toReplace, replacement) {
@@ -87,6 +88,17 @@ TestUtils.prototype.fixDateInGeneratedGruntfileJs = function (targetDir) {
 
 TestUtils.prototype.createTargetPath = function (filename) {
   return path.join(path.dirname(filename), 'temp', path.basename(filename, '.js'));
+}
+
+TestUtils.prototype.rmdirSyncRecursive = function (folder, force) {
+    shell.rm('-r'  + (force == true ? 'f' : ''), folder);
+}
+
+TestUtils.prototype.createTargetFolderAndAssertIsEmpty = function (filename) {
+    var folder = path.join(path.dirname(filename), 'temp', path.basename(filename, '.js'));
+    shell.rm('-rf', folder);
+    shell.mkdir('-p', folder);
+    return folder;
 }
 
 TestUtils.prototype.createArchetypesDir = function (name) {

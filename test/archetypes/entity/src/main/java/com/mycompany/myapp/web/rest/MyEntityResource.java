@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.mycompany.myapp.domain.MyEntity;
 import com.mycompany.myapp.repository.MyEntityRepository;
+import com.mycompany.myapp.web.rest.util.HeaderUtil;
 import com.mycompany.myapp.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,13 +40,15 @@ public class MyEntityResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> create(@Valid @RequestBody MyEntity myEntity) throws URISyntaxException {
+    public ResponseEntity<MyEntity> create(@Valid @RequestBody MyEntity myEntity) throws URISyntaxException {
         log.debug("REST request to save MyEntity : {}", myEntity);
         if (myEntity.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new myEntity cannot already have an ID").build();
+            return ResponseEntity.badRequest().header("Failure", "A new myEntity cannot already have an ID").body(null);
         }
-        myEntityRepository.save(myEntity);
-        return ResponseEntity.created(new URI("/api/myEntitys/" + myEntity.getId())).build();
+        MyEntity result = myEntityRepository.save(myEntity);
+        return ResponseEntity.created(new URI("/api/myEntitys/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert("myEntity", result.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -55,13 +58,15 @@ public class MyEntityResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> update(@Valid @RequestBody MyEntity myEntity) throws URISyntaxException {
+    public ResponseEntity<MyEntity> update(@Valid @RequestBody MyEntity myEntity) throws URISyntaxException {
         log.debug("REST request to update MyEntity : {}", myEntity);
         if (myEntity.getId() == null) {
             return create(myEntity);
         }
-        myEntityRepository.save(myEntity);
-        return ResponseEntity.ok().build();
+        MyEntity result = myEntityRepository.save(myEntity);
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert("myEntity", myEntity.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -102,8 +107,9 @@ public class MyEntityResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete MyEntity : {}", id);
         myEntityRepository.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("myEntity", id.toString())).build();
     }
 }

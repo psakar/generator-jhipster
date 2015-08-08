@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -26,6 +27,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 /**
  * Test class for the MyEntityResource REST controller.
@@ -44,6 +46,9 @@ public class MyEntityResourceTest {
     @Inject
     private MyEntityRepository myEntityRepository;
 
+    @Inject
+    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
     private MockMvc restMyEntityMockMvc;
 
     private MyEntity myEntity;
@@ -53,7 +58,7 @@ public class MyEntityResourceTest {
         MockitoAnnotations.initMocks(this);
         MyEntityResource myEntityResource = new MyEntityResource();
         ReflectionTestUtils.setField(myEntityResource, "myEntityRepository", myEntityRepository);
-        this.restMyEntityMockMvc = MockMvcBuilders.standaloneSetup(myEntityResource).build();
+        this.restMyEntityMockMvc = MockMvcBuilders.standaloneSetup(myEntityResource).setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -68,6 +73,7 @@ public class MyEntityResourceTest {
         int databaseSizeBeforeCreate = myEntityRepository.findAll().size();
 
         // Create the MyEntity
+
         restMyEntityMockMvc.perform(post("/api/myEntitys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(myEntity)))
@@ -83,20 +89,19 @@ public class MyEntityResourceTest {
     @Test
     @Transactional
     public void checkStringFieldIsRequired() throws Exception {
-        // Validate the database is empty
-        assertThat(myEntityRepository.findAll()).hasSize(0);
+        int databaseSizeBeforeTest = myEntityRepository.findAll().size();
         // set the field null
         myEntity.setStringField(null);
 
         // Create the MyEntity, which fails.
+
         restMyEntityMockMvc.perform(post("/api/myEntitys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(myEntity)))
                 .andExpect(status().isBadRequest());
 
-        // Validate the database is still empty
         List<MyEntity> myEntitys = myEntityRepository.findAll();
-        assertThat(myEntitys).hasSize(0);
+        assertThat(myEntitys).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -140,11 +145,13 @@ public class MyEntityResourceTest {
     public void updateMyEntity() throws Exception {
         // Initialize the database
         myEntityRepository.saveAndFlush(myEntity);
-		
+
 		int databaseSizeBeforeUpdate = myEntityRepository.findAll().size();
 
         // Update the myEntity
         myEntity.setStringField(UPDATED_FIELD1);
+        
+
         restMyEntityMockMvc.perform(put("/api/myEntitys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(myEntity)))
@@ -162,7 +169,7 @@ public class MyEntityResourceTest {
     public void deleteMyEntity() throws Exception {
         // Initialize the database
         myEntityRepository.saveAndFlush(myEntity);
-		
+
 		int databaseSizeBeforeDelete = myEntityRepository.findAll().size();
 
         // Get the myEntity

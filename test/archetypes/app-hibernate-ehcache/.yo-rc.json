@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "version": "2.7.0",
+    "version": "2.18.0",
     "generatedDatetime": "2015-03-31 14:59:00.123Z",
     "baseName": "jhipster",
     "packageName": "com.mycompany.myapp",
@@ -12,10 +12,12 @@
     "databaseType": "sql",
     "devDatabaseType": "h2Memory",
     "prodDatabaseType": "mysql",
+    "searchEngine": "no",
     "useCompass": false,
     "buildTool": "maven",
     "frontendBuilder": "grunt",
     "javaVersion": "7",
+    "enableTranslation": true,
     "rememberMeKey": "edd44237637a11657087ce937cca7e3925161366"
   }
 }

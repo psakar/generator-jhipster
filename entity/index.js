@@ -103,7 +103,7 @@ var EntityGenerator = module.exports = function EntityGenerator(args, options, c
     this.pagination = 'no';
     this.validation = false;
     this.dto = 'no';
-    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+    this.pkg = JSON.parse(html.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 var fieldNamesUnderscored = ['id'];

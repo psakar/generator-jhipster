@@ -1,34 +1,34 @@
 {
-   "version": "2.7.0",
+   "version": "2.18.0",
    "generatedDatetime": "2015-03-31 14:59:00.123Z",
    "tableName": "T_MYENTITY",
    "relationships": [],
-    "fields": [
-        {
-            "fieldId": 1,
-            "fieldName": "field1",
-            "fieldType": "String",
-            "fieldNameCapitalized": "Field1",
-            "fieldNameUnderscored": "field1",
-            "fieldInJavaBeanMethod": "StringField",
-            "fieldValidate": true,
-            "fieldValidateRules": [
-                "required",
-                "minlength",
-                "maxlength"
-            ],
-            "fieldValidateRulesMinlength": "3",
-            "fieldValidateRulesMaxlength": "50"
-        }
+  "fields": [
+    {
+    "fieldId": 1,
+    "fieldName": "field1",
+    "fieldType": "String",
+    "fieldNameCapitalized": "Field1",
+    "fieldNameUnderscored": "field1",
+    "fieldInJavaBeanMethod": "StringField",
+    "fieldValidate": true,
+    "fieldValidateRules": [
+      "required",
+      "minlength",
+      "maxlength"
     ],
-    "fieldsContainOwnerManyToMany": false,
-    "fieldsContainOneToMany": false,
-    "fieldsContainLocalDate": false,
-    "fieldsContainCustomTime": false,
-    "fieldsContainBigDecimal": false,
-    "fieldsContainDateTime": false,
-    "fieldsContainDate": false,
-    "changelogDate": "20150405192020",
-    "pagination": "pagination",
-    "validation": true
+    "fieldValidateRulesMinlength": "3",
+    "fieldValidateRulesMaxlength": "50"
+    }
+  ],
+  "fieldsContainOwnerManyToMany": false,
+  "fieldsContainOneToMany": false,
+  "fieldsContainLocalDate": false,
+  "fieldsContainCustomTime": false,
+  "fieldsContainBigDecimal": false,
+  "fieldsContainDateTime": false,
+  "fieldsContainDate": false,
+  "changelogDate": "20150405192020",
+  "pagination": "pagination",
+  "validation": true
 }

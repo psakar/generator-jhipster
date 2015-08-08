@@ -16,22 +16,6 @@ angular.module('jhipsterApp')
         };
         $scope.loadAll();
 
-        $scope.create = function () {
-            MyEntity.update($scope.myEntity,
-                function () {
-                    $scope.loadAll();
-                    $('#saveMyEntityModal').modal('hide');
-                    $scope.clear();
-                });
-        };
-
-        $scope.update = function (id) {
-            MyEntity.get({id: id}, function(result) {
-                $scope.myEntity = result;
-                $('#saveMyEntityModal').modal('show');
-            });
-        };
-
         $scope.delete = function (id) {
             MyEntity.get({id: id}, function(result) {
                 $scope.myEntity = result;
@@ -48,9 +32,12 @@ angular.module('jhipsterApp')
                 });
         };
 
+        $scope.refresh = function () {
+            $scope.loadAll();
+            $scope.clear();
+        };
+
         $scope.clear = function () {
             $scope.myEntity = {field1: null, id: null};
-            $scope.editForm.$setPristine();
-            $scope.editForm.$setUntouched();
         };
     });

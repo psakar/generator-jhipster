@@ -65,7 +65,7 @@ class MyEntityGatlingTest extends Simulation {
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
             .exec(http("Create new myEntity")
-            .put("/api/myEntitys")
+            .post("/api/myEntitys")
             .headers(headers_http_authenticated)
             .body(StringBody("""{"id":null, "field1":"SAMPLE_TEXT"}""")).asJSON
             .check(status.is(201))

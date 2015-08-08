@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('jhipsterApp')
-    .factory('MyEntity', function ($resource) {
+    .factory('MyEntity', function ($resource, DateUtils) {
         return $resource('api/myEntitys/:id', {}, {
             'query': { method: 'GET', isArray: true},
             'get': {

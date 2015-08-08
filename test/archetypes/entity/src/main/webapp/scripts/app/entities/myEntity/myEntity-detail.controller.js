@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('jhipsterApp')
-    .controller('MyEntityDetailController', function ($scope, $stateParams, MyEntity) {
-        $scope.myEntity = {};
+    .controller('MyEntityDetailController', function ($scope, $rootScope, $stateParams, entity, MyEntity) {
+        $scope.myEntity = entity;
         $scope.load = function (id) {
             MyEntity.get({id: id}, function(result) {
-              $scope.myEntity = result;
+                $scope.myEntity = result;
             });
         };
-        $scope.load($stateParams.id);
+        $rootScope.$on('jhipsterApp:myEntityUpdate', function(event, result) {
+            $scope.myEntity = result;
+        });
     });

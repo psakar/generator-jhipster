@@ -29,7 +29,7 @@ Generator.prototype.addAppScriptToIndex = function (script) {
             ]
         });
     } catch (e) {
-        console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + '.js ' + 'not added.\n'.yellow);
+        console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + ' not added (Error - ' + e.message + ').\n'.yellow);
     }
 };
 
@@ -45,7 +45,7 @@ Generator.prototype.addComponentsScriptToIndex = function (script) {
             ]
         });
     } catch (e) {
-        console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + '.js ' + 'not added.\n'.yellow);
+        console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + script + ' not added (error - ' + e.message + ').\n'.yellow);
     }
 };
 
@@ -94,7 +94,7 @@ Generator.prototype.addChangelogToLiquibase = function (changelogName) {
             ]
         });
     } catch (e) {
-        console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + changelogName + '.js ' + 'not added.\n'.yellow);
+        console.log('\nUnable to find '.yellow + fullPath + '. Reference to '.yellow + changelogName + '.js ' + 'not added (Error - ' + e.message + ').\n'.yellow);
     }
 };
 

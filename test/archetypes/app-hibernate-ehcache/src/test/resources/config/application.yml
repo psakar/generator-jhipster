@@ -11,6 +11,9 @@ async:
     maxPoolSize: 50
     queueCapacity: 10000
 
+liquibase:
+    context: test
+
 spring:
     datasource:
         dataSourceClassName: org.h2.jdbcx.JdbcDataSource
@@ -21,7 +24,7 @@ spring:
         password:
 
     jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
+        database-platform: com.mycompany.myapp.domain.util.FixedH2Dialect
         database: H2
         openInView: false
         show_sql: true
@@ -50,6 +53,7 @@ metrics:
 swagger:
     apiDocsLocation: http://localhost:8080
     title: jhipster API
+    version: 0.0.1
     description: jhipster applications and beyond!
     termsOfServiceUrl: http://jhipster.github.io/
     contact:
