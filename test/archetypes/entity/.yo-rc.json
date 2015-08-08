@@ -1,7 +1,7 @@
 {
   "generator-jhipster": {
   "appPath": "/home/development/angularjs/generator-jhipster/test/temp/test-generate-entity/src/main/webapp",
-  "version": "2.18.0",
+  "version": "2.19.0",
   "generatedDatetime": "2015-03-31 14:59:00.123Z",
   "baseName": "jhipster",
   "packageName": "com.mycompany.myapp",

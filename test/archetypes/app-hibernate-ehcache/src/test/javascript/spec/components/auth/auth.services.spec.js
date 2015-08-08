@@ -13,13 +13,12 @@ describe('Services Tests ', function () {
             authService = Auth;
             spiedAuthServerProvider = AuthServerProvider;
             //Request on app init
-
-            $httpBackend.expectGET('scripts/components/navbar/navbar.html').respond({});
-            
-            $httpBackend.expectGET('i18n/en/global.json').respond(200, '');
-            $httpBackend.expectGET('i18n/en/main.json').respond(200, '');
-	     
-            $httpBackend.expectGET('scripts/app/main/main.html').respond({});
+            $httpBackend.whenGET('scripts/app/main/main.html').respond({});
+            $httpBackend.whenGET('scripts/components/navbar/navbar.html').respond({});
+            var globalJson = new RegExp('i18n\/.*\/global.json')
+            var mainJson = new RegExp('i18n\/.*\/main.json');
+            $httpBackend.whenGET(globalJson).respond({});
+            $httpBackend.whenGET(mainJson).respond({});
           }));
         //make sure no expectations were missed in your tests.
         //(e.g. expectGET or expectPOST)

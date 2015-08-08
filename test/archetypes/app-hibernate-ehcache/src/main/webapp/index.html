@@ -22,9 +22,6 @@
         <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
         <div ui-view="navbar" ng-cloak=""></div>
         <div class="container">
-            <div class="alerts" ng-cloak="" ng-controller="AlertController">
-                <alert ng-cloak="" ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()"><pre>{{ alert.msg }}</pre></alert>
-            </div>
             <div class="well" ui-view="content"></div>
 
             <div class="footer">
@@ -67,14 +64,16 @@
     <script src="scripts/components/admin/logs.service.js"></script>
     <script src="scripts/components/admin/configuration.service.js"></script>
     <script src="scripts/components/admin/monitoring.service.js"></script>
-    <script src="scripts/components/errorhandler/errorDisplay.directive.js"></script>
-    <script src="scripts/components/errorhandler/errorhandler.service.js"></script>
+    <script src="scripts/components/interceptor/auth.interceptor.js"></script>
+    <script src="scripts/components/interceptor/errorhandler.interceptor.js"></script>
+    <script src="scripts/components/interceptor/notification.interceptor.js"></script>
     <script src="scripts/components/navbar/navbar.directive.js"></script>
     <script src="scripts/components/navbar/navbar.controller.js"></script>
     <script src="scripts/components/user/user.service.js"></script>
     <script src="scripts/components/util/truncate.filter.js"></script>
     <script src="scripts/components/util/base64.service.js"></script>
-    <script src="scripts/components/util/alert.service.js"></script>
+    <script src="scripts/components/alert/alert.service.js"></script>
+    <script src="scripts/components/alert/alert.directive.js"></script>
     <script src="scripts/components/util/parse-links.service.js"></script>
     <script src="scripts/components/util/dateutil.service.js"></script>
     <script src="scripts/app/account/account.js"></script>
