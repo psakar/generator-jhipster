@@ -77,7 +77,7 @@ describe('jhipster generate entity', function () {
     return '{'
     + '\n' + '   "version": "' + testUtils.getGeneratorVersion() + '",'
     + '\n' + '   "generatedDatetime": "' + testUtils.getGeneratedDateTime() + '",'
-    + '\n' + '   "tableName": "T_MYENTITY",'
+    + '\n' + '   "tableName": "\\"myEntity\\"",'
     + '\n' + '   "relationships": [],'
     + '\n' + '  "fields": ['
     + '\n' + '    {'

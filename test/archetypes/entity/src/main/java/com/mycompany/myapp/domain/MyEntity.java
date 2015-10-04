@@ -13,7 +13,7 @@ import java.util.Objects;
  * A MyEntity.
  */
 @Entity
-@Table(name = "T_MYENTITY")
+@Table(name = "\"myEntity\"")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MyEntity implements Serializable {
 
