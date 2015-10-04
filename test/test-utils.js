@@ -37,7 +37,7 @@ TestUtils.prototype.assertGeneratedFiles = function (expectedFilesDir, targetDir
       if (entry.state != 'equal') {
         var name1 = targetDir + (entry.name1 ? entry.relativePath + path.sep + entry.name1 : '');
         var name2 = expectedFilesDir + (entry.name2 ? entry.relativePath + path.sep + entry.name2 : '');
-        console.log(" " + entry.type1 + " " +  name1 + " " + state + " " + entry.type2 + " " + name2);
+        console.log(" " + entry.type1 + " " +  name1 + (entry.type1 === 'file' && entry.type2 === 'file' && state === '<>' ? "": " " + state + " " + entry.type2) + " " + name2);
       }
     });
   }
