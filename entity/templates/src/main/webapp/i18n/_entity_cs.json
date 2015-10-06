@@ -5,8 +5,11 @@
                 "title": "<%= data.translation_plural.cs %>",
                 "createOrEditLabel": "Přidat/upravit <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %>"
             },
+            "created": "Byl uložen nový <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> s identifikátorem {{ param }}",
+            "updated": "Byl uložen <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> s identifikátorem {{ param }}",
+            "deleted": "Byl smazán <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> s identifikátorem {{ param }}",
             "delete": {
-                "question": "Opravdu chcete smazat <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> {{ id }}?"
+                "question": "Opravdu chcete smazat <%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %> s identifikátorem {{ id }}?"
             },
             "detail": {
                 "title": "<%= defaultString(uncapitalize(eval('data.translation.cs')), entityClass) %>"
